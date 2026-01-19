@@ -1,3 +1,4 @@
+<!-- 3.1.0 SnowyPenguin88 | penguiXD @ 2026 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +22,6 @@ body {
   overflow: hidden;
   display: flex;
 }
-/* Click to enter */
 #enter-overlay {
   position: fixed;
   inset: 0;
@@ -48,7 +48,6 @@ body {
   animation: flash 1.8s infinite alternate;
 }
 @keyframes flash { from { opacity: 0.5; } to { opacity: 1; } }
-/* Loader / Boot */
 #loader {
   position: fixed;
   inset: 0;
@@ -96,7 +95,6 @@ body {
 }
 #skip-btn:hover, #volume-container:hover { transform: scale(1.05); }
 #volume-slider { width: 100px; accent-color: var(--red); }
-/* Hello */
 #hello {
   position: fixed;
   inset: 0;
@@ -148,7 +146,6 @@ body {
 }
 #persistent-volume-container:hover { transform: scale(1.05); }
 #persistent-volume-slider { width: 100px; accent-color: var(--red); }
-/* Sidebar */
 #sidebar {
   width: 280px;
   background: #0e0e0e;
@@ -168,30 +165,30 @@ body {
   height: 110px; 
   border-radius: 50%; 
   border: 3px solid var(--red); 
-  transition: box-shadow 0.4s; 
-  animation: shine 3s infinite alternate ease-in-out;
+  transition: box-shadow 0.6s ease-in-out; 
+  animation: shine 5s infinite alternate ease-in-out;
 }
 @keyframes shine {
-  from { box-shadow: 0 0 8px var(--red), inset 0 0 10px rgba(225,6,0,0.4); }
-  to   { box-shadow: 0 0 25px var(--red), inset 0 0 20px rgba(225,6,0,0.7); }
+  from { box-shadow: 0 0 10px rgba(225,6,0,0.5), inset 0 0 12px rgba(225,6,0,0.3); }
+  to   { box-shadow: 0 0 30px var(--red), inset 0 0 25px rgba(225,6,0,0.6); }
 }
-#pfp:hover { box-shadow: 0 0 30px var(--red); }
+#pfp:hover { box-shadow: 0 0 40px var(--red); }
 #username { 
   font-size: 1.8rem; 
   margin: 12px 0; 
   font-weight: bold; 
   color: var(--red); 
   text-shadow: 0 0 15px var(--red); 
-  animation: strobe 4s infinite alternate ease-in-out; 
+  animation: strobe 6s infinite alternate ease-in-out; 
 }
 @keyframes strobe {
-  0%   { text-shadow: 0 0 10px var(--red); }
-  50%  { text-shadow: 0 0 35px var(--red); }
-  100% { text-shadow: 0 0 10px var(--red); }
+  0%   { text-shadow: 0 0 12px var(--red); }
+  50%  { text-shadow: 0 0 40px var(--red); }
+  100% { text-shadow: 0 0 12px var(--red); }
 }
 #github-credit {
   font-size: 0.75rem;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   text-align: center;
   max-width: 100%;
   line-height: 1.3;
@@ -206,11 +203,10 @@ body {
   color: var(--red);
 }
 #local-time {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--gray);
-  margin-top: 4px;
+  margin-top: 2px;
 }
-/* Flags */
 .flag-container {
   display: flex;
   gap: 12px;
@@ -227,7 +223,6 @@ body {
   justify-content: center;
   overflow: hidden;
   transition: transform 0.3s;
-  position: relative;
 }
 .flag-item:hover { transform: rotate(360deg); }
 .flag-item img {
@@ -235,26 +230,6 @@ body {
   height: 100%;
   object-fit: contain;
 }
-.verified-badge {
-  width: 24px;
-  height: 24px;
-  cursor: help;
-}
-.verified-badge:hover::after {
-  content: "United Kingdom";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,0.9);
-  color: var(--red);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  white-space: nowrap;
-  pointer-events: none;
-}
-/* Sidebar buttons */
 nav ul { list-style: none; padding: 0; width: 100%; }
 nav li {
   padding: 14px 16px;
@@ -275,7 +250,6 @@ nav li:hover, nav li.active {
   transform: scale(1.05);
   box-shadow: 0 0 10px var(--red);
 }
-/* Main */
 #main {
   flex: 1;
   padding: 40px;
@@ -299,7 +273,6 @@ nav li:hover, nav li.active {
 }
 h1 { color: var(--red); border-bottom: 1px solid var(--red); padding-bottom: 10px; margin-bottom: 28px; }
 h2 { color: var(--red); margin-top: 32px; }
-/* Patch notes */
 .patch-notes ul {
   list-style: none;
   padding-left: 0;
@@ -311,7 +284,6 @@ h2 { color: var(--red); margin-top: 32px; }
 .patch-notes strong {
   color: var(--red);
 }
-/* Gallery & Cards */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -356,7 +328,6 @@ h2 { color: var(--red); margin-top: 32px; }
   margin-top: 15px;
   pointer-events: auto;
 }
-/* Music */
 .album {
   text-align: center;
   transition: transform 0.3s;
@@ -380,14 +351,15 @@ h2 { color: var(--red); margin-top: 32px; }
   margin-top: 12px;
   font-size: 1.1rem;
   color: var(--red);
+  line-height: 1.3;
 }
-/* Responsive */
 @media (max-width: 768px) {
   #sidebar { width: 240px; }
   nav li { font-size: 1.2rem; padding: 10px 12px; }
   #main { padding: 20px; }
   .description { font-size: 0.8rem; }
   .album img { width: 280px; height: 280px; }
+  .album span { font-size: 0.95rem; }
 }
 </style>
 </head>
@@ -414,11 +386,10 @@ h2 { color: var(--red); margin-top: 32px; }
   <div id="username">penguiXD</div>
   <div id="github-credit">
     Powered by GitHub, by <a href="https://github.com/snowypenguin88" target="_blank">SnowyPenguin88</a>
-    <div id="local-time">Local Time: --:-- GMT</div>
+    <div id="local-time">Local Time: --:--:-- GMT</div>
   </div>
   <div class="flag-container">
     <div class="flag-item"><img src="https://flagcdn.com/w40/gb.png" alt="GB"></div>
-    <img class="verified-badge" src="https://www.iconpacks.net/icons/2/free-red-verified-badge-icon-18763-thumb.png" alt="Verified" title="United Kingdom">
   </div>
   <nav>
     <ul>
@@ -448,6 +419,7 @@ h2 { color: var(--red); margin-top: 32px; }
     <h2>Website Patch Notes</h2>
     <div class="patch-notes">
       <ul>
+        <li><strong>3.1.0 (19/01/2026)</strong><br>* Made a new repo </3<br>* Fixed a bunch of other stuff (LAG, LAG, LAG!)</li>
         <li><strong>3.0.0 (19/01/2026)</strong><br>* Added more cool things to browse!<br>* Fixed a bug<br>* Added more under information, also added dates to patchnotes.<br>* Smoother card hover + description reveal animations<br>* Faster background music loop transition</li>
         <li><strong>2.9.3 (18/01/2026)</strong><br>* Fixed the gaming bug once more :)</li>
         <li><strong>2.8.1 (18/01/2026)</strong><br>* Implemented multiple new UI features for aesthetic<br>* Fixed the boot bug again LOL<br>* Change the volume slider bug AGAIN<br>* Added a new album!<br>* Fixed descriptions under games</li>
@@ -530,39 +502,39 @@ h2 { color: var(--red); margin-top: 32px; }
     <h1>Shows</h1>
     <div class="gallery">
       <div class="text-card">
-        <a href="https://www.imdb.com/title/tt4158110/" target="_blank">Mr. Robot</a>
+        <div>Mr. Robot</div>
         <div class="description">⭐ 10/10 "This is one of the best TV shows of all time, a show with immaculate cinematography and amazing twists. It isn't 'corny' and is executed perfectly for such a niche plot subject. The seasons get better as you progress and the finale is insanely good."</div>
       </div>
       <div class="text-card">
-        <a href="https://www.imdb.com/title/tt0903747/" target="_blank">Breaking Bad</a>
+        <div>Breaking Bad</div>
         <div class="description">⭐ 9.8/10 "Another favourite TV show for me, I loved the character dynamic between Walter and Jesse. Walter's development furthermore was some of the best written pieces of fiction I had ever come across. The plot is also unique and kept me on the edge of my seat on some episodes. I wish I could watch it for the first time again."</div>
       </div>
       <div class="text-card">
-        <a href="https://www.imdb.com/title/tt3032476/" target="_blank">Better Call Saul</a>
+        <div>Better Call Saul</div>
         <div class="description">⭐ 10/10 "Better Call Saul had a much more dramatic tone in comparison to Breaking Bad for me at least. Saul Goodman (Jimmy) was a great role and it is such a shame that Bob Odenkirk never won an emmy for his epic performance."</div>
       </div>
       <div class="text-card">
-        <a href="https://www.imdb.com/title/tt0500092/" target="_blank">Serial Experiments Lain</a>
+        <div>Serial Experiments Lain</div>
         <div class="description">⭐ 7/10 "For an old anime, this series had really sensitive topics and had amazing impact in some episodes, the overall plot is extremely trippy at times. At first I felt almost confused but it started to click together, and until that point I realised I watched a masterpiece."</div>
       </div>
       <div class="text-card">
-        <a href="https://www.imdb.com/title/tt0213338/" target="_blank">Cowboy Bebop</a>
+        <div>Cowboy Bebop</div>
         <div class="description">⭐ 10/10 "One of my favourite animes of all time, this anime in particular was extremely ahead of it's time and Spike is one of my favourite characters in general. Cowboy Bebop has incredible world building and lore."</div>
       </div>
       <div class="text-card">
-        <a href="https://www.imdb.com/title/tt0112159/" target="_blank">Neon Genesis Evangelion</a>
+        <div>Neon Genesis Evangelion</div>
         <div class="description">⭐ 11/10 "This is in my top 3, not just animes, but programmes of all time. The world building and depth behind characters are so misunderstood by a majority. Shinji's character development is some of the best story-telling truly was an honour to witness. The original ending of Evangelion was also jaw-dropping, and it has one of the best original soundtracks (Shirō Sagisu) in TV!"</div>
       </div>
       <div class="text-card">
-        <a href="https://www.imdb.com/title/tt2356777/" target="_blank">True Detective</a>
+        <div>True Detective</div>
         <div class="description">⭐ 8/10 "True Detective was an immaculate performance. I loved Marty and Rust's character dynamic and partnership. The TV show is a little bit f*cked up, but it has really impactful quotes, especially from Rust. It also felt like I was reading a novel, through the constant timelines switches, which provided multiple perspectives on things."</div>
       </div>
       <div class="text-card">
-        <a href="https://www.imdb.com/title/tt0773262/" target="_blank">Dexter</a>
+        <div>Dexter</div>
         <div class="description">⭐ 9.2/10 "Dexter started blowing up on TikTok, so I thought I'd give it a try. To my surprise it had insanely good plot twists. Not one time did I feel like it was dragged out, even controversely the later seasons. Personally, I really liked the original ending too, but my favourite season was Season 6; The Doomsday Killer."</div>
       </div>
       <div class="text-card">
-        <a href="https://www.imdb.com/title/tt0115160/" target="_blank">Dragon Ball Z</a>
+        <div>Dragon Ball Z</div>
         <div class="description">⭐ 11/10 "I hadn't really watched many anime before trying out Dragon Ball through my own curiosity. I found out I had to watch Kai to skip filler, with the sacrifice of Bruce Faulconer's amazing soundtrack for Z. DBZ really opened up my eyes of being bias against anime simply for it's reputation at the time. Dragon Ball is one of the things closest to my heart. My favourite characters consist of Gohan and Trunks. I also prefer Z to Super's anime. RIP Toriyama."</div>
       </div>
     </div>
@@ -580,7 +552,7 @@ h2 { color: var(--red); margin-top: 32px; }
     <div class="gallery">
       <div class="album">
         <img src="https://m.media-amazon.com/images/I/61ykZt82PsL.jpg" alt="Selected Ambient Works 85–92 — Aphex Twin">
-        <span>Selected Ambient Works 85–92 — Aphex Twin</span>
+        <span>Selected Ambient Works 85–92 — Aphex Twin (1992)</span>
       </div>
       <div class="album">
         <img src="https://www.dustygroove.com/images/products/c/crystalcast_crystalca_101b.jpg" alt="Crystal Castles — Crystal Castles (2008)">
@@ -588,15 +560,15 @@ h2 { color: var(--red); margin-top: 32px; }
       </div>
       <div class="album">
         <img src="https://cdn-p.smehost.net/sites/af0adc8ea1314bfb8328afdc06ce1e06/wp-content/uploads/2020/12/Unknown-scaled.jpeg" alt="Evangelion Finally">
-        <span>Evangelion Finally</span>
+        <span>Evangelion Finally - Various Artists (2020)</span>
       </div>
     </div>
   </div>
   <div id="socials" class="section">
     <h1>Socials</h1>
     <ul style="list-style:none; padding:0; line-height:2.4; font-size:1.1rem;">
-      <li><strong>Steam:</strong> <a href="https://steamcommunity.com/id/penguiXD" target="_blank" style="color:var(--red)">steamcommunity.com/id/penguiXD</a></li>
-      <li><strong>Steam Group:</strong> <a href="https://steamcommunity.com/groups/persec-" target="_blank" style="color:var(--red)">steamcommunity.com/groups/persec-</a></li>
+      <li><strong>Steam:</strong> steamcommunity.com/id/penguiXD</li>
+      <li><strong>Steam Group:</strong> steamcommunity.com/groups/persec-</li>
       <li><strong>GitHub:</strong> <a href="https://github.com/snowypenguin88" target="_blank" style="color:var(--red)">github.com/snowypenguin88</a></li>
       <li><strong>Discord:</strong> penguiXD</li>
     </ul>
@@ -604,7 +576,6 @@ h2 { color: var(--red); margin-top: 32px; }
 </div>
 <audio id="bg-music" src="background-music.mp3" loop preload="auto"></audio>
 <script>
-// Create persistent volume
 function createPersistentVolume() {
   const container = document.createElement('div');
   container.id = 'persistent-volume-container';
@@ -628,8 +599,6 @@ const bgMusic = document.getElementById('bg-music');
 const bootControls = document.getElementById('boot-controls');
 bgMusic.volume = 0.5;
 let persistentSlider = null;
-
-// Enter
 enterOverlay.onclick = () => {
   enterOverlay.style.display = 'none';
   loader.style.display = 'flex';
@@ -637,8 +606,6 @@ enterOverlay.onclick = () => {
   video.play().catch(e => console.log("Video play failed:", e));
   video.volume = volumeSlider.value || 0.5;
 };
-
-// Volume sync
 const syncVolume = (value) => {
   video.volume = value;
   bgMusic.volume = value;
@@ -646,13 +613,9 @@ const syncVolume = (value) => {
   volumeSlider.value = value;
 };
 volumeSlider.addEventListener('input', e => syncVolume(e.target.value));
-
-// Skip
 skipBtn.onclick = () => {
   video.currentTime = video.duration || 999;
 };
-
-// Boot end
 video.onended = () => {
   loader.style.display = 'none';
   hello.style.display = 'flex';
@@ -669,18 +632,14 @@ video.onended = () => {
     persistentSlider.addEventListener('input', e => syncVolume(e.target.value));
   }, 1800);
 };
-
-// Faster music loop
 bgMusic.onended = function() {
   bgMusic.currentTime = 0;
   bgMusic.volume = 0;
   bgMusic.play();
   setTimeout(() => {
     bgMusic.volume = persistentSlider ? persistentSlider.value : 0.5;
-  }, 80); // very quick fade-in after instant restart
+  }, 80);
 };
-
-// Navigation
 document.querySelectorAll('nav li').forEach(li => {
   li.onclick = () => {
     document.querySelectorAll('nav li').forEach(n => n.classList.remove('active'));
@@ -689,16 +648,20 @@ document.querySelectorAll('nav li').forEach(li => {
     document.getElementById(li.dataset.section).classList.add('active');
   };
 });
-
-// Local time (UK GMT)
 function updateLocalTime() {
   const now = new Date();
-  const options = { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hour12: false };
+  const options = {
+    timeZone: 'Europe/London',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  };
   const timeString = now.toLocaleTimeString('en-GB', options);
   document.getElementById('local-time').textContent = `Local Time: ${timeString} GMT`;
 }
 updateLocalTime();
-setInterval(updateLocalTime, 60000);
+setInterval(updateLocalTime, 1000);
 </script>
 </body>
 </html>
