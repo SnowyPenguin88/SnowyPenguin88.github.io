@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>penguiXD</title>
+<link rel="icon" href="pfp.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+:root {
+  --red: #e10600;
+  --gray: #cfcfcf;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  background: black;
+  color: var(--gray);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+}
+/* Click to enter */
+#enter-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  color: var(--red);
+  font-size: 3rem;
+  cursor: pointer;
+  text-align: center;
+  text-shadow: 0 0 20px var(--red);
+  animation: pulse 2s infinite alternate;
+}
+@keyframes pulse {
+  from { text-shadow: 0 0 20px var(--red); }
+  to { text-shadow: 0 0 30px var(--red); }
+}
+#enter-overlay .warning {
+  font-size: 1.5rem;
+  margin-top: 24px;
+  animation: flash 1.8s infinite alternate;
+}
+@keyframes flash { from { opacity: 0.5; } to { opacity: 1; } }
+/* Loader / Boot */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+#loader video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+}
+#boot-controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease-in-out 0.4s;
+}
+#boot-controls.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#skip-btn, #volume-container {
+  background: rgba(0,0,0,0.7);
+  border: 2px solid var(--red);
+  color: var(--red);
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#skip-btn:hover, #volume-container:hover { transform: scale(1.05); }
+#volume-slider { width: 100px; accent-color: var(--red); }
+/* Hello */
+#hello {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  z-index: 9000;
+}
+#hello span {
+  color: var(--red);
+  font-size: 3.8rem;
+  letter-spacing: 8px;
+  text-shadow: 0 0 25px var(--red);
+  animation: zoomFade 2s forwards, glow 1.5s infinite alternate;
+}
+@keyframes glow {
+  from { text-shadow: 0 0 25px var(--red); }
+  to { text-shadow: 0 0 40px var(--red); }
+}
+@keyframes zoomFade {
+  0% { transform: scale(0.3); opacity: 0; }
+  40% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+#persistent-volume-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  background: rgba(0,0,0,0.7);
+  border: 2px solid var(--red);
+  color: var(--red);
+  padding: 10px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: bold;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.6s ease-in-out 0.8s;
+}
+#persistent-volume-container.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#persistent-volume-container:hover { transform: scale(1.05); }
+#persistent-volume-slider { width: 100px; accent-color: var(--red); }
+/* Sidebar */
+#sidebar {
+  width: 280px;
+  background: #0e0e0e;
+  border-right: 2px solid var(--red);
+  padding: 30px 15px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  animation: slideInLeft 0.8s ease-out;
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+#pfp { 
+  width: 110px; 
+  height: 110px; 
+  border-radius: 50%; 
+  border: 3px solid var(--red); 
+  transition: box-shadow 0.4s; 
+  animation: shine 3s infinite alternate ease-in-out;
+}
+@keyframes shine {
+  from { box-shadow: 0 0 8px var(--red), inset 0 0 10px rgba(225,6,0,0.4); }
+  to   { box-shadow: 0 0 25px var(--red), inset 0 0 20px rgba(225,6,0,0.7); }
+}
+#pfp:hover { box-shadow: 0 0 30px var(--red); }
+#username { 
+  font-size: 1.8rem; 
+  margin: 12px 0; 
+  font-weight: bold; 
+  color: var(--red); 
+  text-shadow: 0 0 15px var(--red); 
+  animation: strobe 4s infinite alternate ease-in-out; 
+}
+@keyframes strobe {
+  0%   { text-shadow: 0 0 10px var(--red); }
+  50%  { text-shadow: 0 0 35px var(--red); }
+  100% { text-shadow: 0 0 10px var(--red); }
+}
+#github-credit {
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+  text-align: center;
+  max-width: 100%;
+  line-height: 1.3;
+  white-space: normal;
+}
+#github-credit a {
+  color: var(--gray);
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+#github-credit a:hover {
+  color: var(--red);
+}
+#local-time {
+  font-size: 0.7rem;
+  color: var(--gray);
+  margin-top: 4px;
+}
+/* Flags */
+.flag-container {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0 24px;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+.flag-item {
+  width: 32px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.3s;
+  position: relative;
+}
+.flag-item:hover { transform: rotate(360deg); }
+.flag-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.verified-badge {
+  width: 24px;
+  height: 24px;
+  cursor: help;
+}
+.verified-badge:hover::after {
+  content: "United Kingdom";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.9);
+  color: var(--red);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  pointer-events: none;
+}
+/* Sidebar buttons */
+nav ul { list-style: none; padding: 0; width: 100%; }
+nav li {
+  padding: 14px 16px;
+  margin: 10px 0;
+  border: 2px solid var(--red);
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: 700;
+  width: 100%;
+  border-radius: 4px;
+  transition: background 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+  letter-spacing: 0.5px;
+}
+nav li:hover, nav li.active {
+  background: var(--red);
+  color: black;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px var(--red);
+}
+/* Main */
+#main {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  display: none;
+  background: radial-gradient(circle, #1a0000 0%, #000 90%);
+  opacity: 0;
+  transition: opacity 1s ease;
+  animation: fadeInMain 1.2s ease-in forwards;
+}
+@keyframes fadeInMain {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+#main.visible { opacity: 1; }
+.section { display: none; }
+.section.active { display: block; animation: sectionFade 0.6s ease; }
+@keyframes sectionFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+h1 { color: var(--red); border-bottom: 1px solid var(--red); padding-bottom: 10px; margin-bottom: 28px; }
+h2 { color: var(--red); margin-top: 32px; }
+/* Patch notes */
+.patch-notes ul {
+  list-style: none;
+  padding-left: 0;
+  line-height: 1.6;
+}
+.patch-notes li {
+  margin-bottom: 16px;
+}
+.patch-notes strong {
+  color: var(--red);
+}
+/* Gallery & Cards */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+.text-card {
+  background: #111;
+  border: 2px solid var(--red);
+  padding: 20px;
+  text-align: center;
+  transition: all 0.35s ease;
+  position: relative;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  min-height: 80px;
+  justify-content: center;
+  overflow: hidden;
+}
+.text-card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 20px var(--red);
+  z-index: 10;
+  background: #1a0000;
+}
+.description {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: white;
+  text-align: left;
+  opacity: 0;
+  max-height: 0;
+  margin-top: 0;
+  overflow: hidden;
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+.text-card:hover .description {
+  opacity: 1;
+  max-height: 500px;
+  margin-top: 15px;
+  pointer-events: auto;
+}
+/* Music */
+.album {
+  text-align: center;
+  transition: transform 0.3s;
+}
+.album:hover { transform: scale(1.05); }
+.album img {
+  width: 320px;
+  height: 320px;
+  object-fit: cover;
+  border: 2px solid var(--red);
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(225,6,0,0.3);
+  animation: imgGlow 2s infinite alternate;
+}
+@keyframes imgGlow {
+  from { box-shadow: 0 0 15px rgba(225,6,0,0.3); }
+  to { box-shadow: 0 0 25px rgba(225,6,0,0.5); }
+}
+.album span {
+  display: block;
+  margin-top: 12px;
+  font-size: 1.1rem;
+  color: var(--red);
+}
+/* Responsive */
+@media (max-width: 768px) {
+  #sidebar { width: 240px; }
+  nav li { font-size: 1.2rem; padding: 10px 12px; }
+  #main { padding: 20px; }
+  .description { font-size: 0.8rem; }
+  .album img { width: 280px; height: 280px; }
+}
+</style>
+</head>
+<body>
+<div id="enter-overlay">
+  <div>Click anywhere to enter</div>
+  <span class="warning">⚠️ WARNING: FLASHING LIGHTS AHEAD ⚠️</span>
+</div>
+<div id="loader">
+  <video id="boot-video" playsinline preload="auto">
+    <source src="boot.mp4" type="video/mp4">
+  </video>
+  <div id="boot-controls">
+    <button id="skip-btn">Skip →</button>
+    <div id="volume-container">
+      <span>Vol</span>
+      <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+    </div>
+  </div>
+</div>
+<div id="hello"><span>Hello, user!</span></div>
+<div id="sidebar">
+  <img id="pfp" src="pfp.png">
+  <div id="username">penguiXD</div>
+  <div id="github-credit">
+    Powered by GitHub, by <a href="https://github.com/snowypenguin88" target="_blank">SnowyPenguin88</a>
+    <div id="local-time">Local Time: --:-- GMT</div>
+  </div>
+  <div class="flag-container">
+    <div class="flag-item"><img src="https://flagcdn.com/w40/gb.png" alt="GB"></div>
+    <img class="verified-badge" src="https://www.iconpacks.net/icons/2/free-red-verified-badge-icon-18763-thumb.png" alt="Verified" title="United Kingdom">
+  </div>
+  <nav>
+    <ul>
+      <li data-section="home" class="active">HOME</li>
+      <li data-section="games">GAMES</li>
+      <li data-section="shows">SHOWS</li>
+      <li data-section="manga">MANGA</li>
+      <li data-section="music">MUSIC</li>
+      <li data-section="socials">SOCIALS</li>
+    </ul>
+  </nav>
+</div>
+<div id="main">
+  <div id="home" class="section active">
+    <h1>Information</h1>
+    <p>Hey there! I'm just a guy that tries to do cool things! I'm a student
+    and computer science is just a hobby of mine, this website was made with
+    HTML and hosted on GitHub pages! I enjoy reading and writing from novels to manga
+    and enjoy gaming casually for the most part. <br><br>
+    For now, enjoy the site! (Last Information Update: 19/01/2026)</p>
+    <h2>Currently Watching / Reading</h2>
+    <ul style="list-style: none; padding-left: 0; line-height: 1.8;">
+      <li>📖 Homunculus (Manga)</li>
+      <li>📺 The Sopranos (TV)</li>
+      <li>📺 Power (TV)</li>
+    </ul>
+    <h2>Website Patch Notes</h2>
+    <div class="patch-notes">
+      <ul>
+        <li><strong>3.0.0 (19/01/2026)</strong><br>* Added more cool things to browse!<br>* Fixed a bug<br>* Added more under information, also added dates to patchnotes.<br>* Smoother card hover + description reveal animations<br>* Faster background music loop transition</li>
+        <li><strong>2.9.3 (18/01/2026)</strong><br>* Fixed the gaming bug once more :)</li>
+        <li><strong>2.8.1 (18/01/2026)</strong><br>* Implemented multiple new UI features for aesthetic<br>* Fixed the boot bug again LOL<br>* Change the volume slider bug AGAIN<br>* Added a new album!<br>* Fixed descriptions under games</li>
+        <li><strong>2.6.8 (18/01/2026)</strong><br>* No I will not say 6.7<br>* Fixed the boot.mp4 bug</li>
+        <li><strong>2.6.4 (18/01/2026)</strong><br>* Bug fixes<br>* Changed some UI features<br>* Added animations to games<br>* Rehauled description animations</li>
+        <li><strong>2.3.3 (18/01/2026)</strong><br>* Added this, lol</li>
+      </ul>
+    </div>
+  </div>
+  <div id="games" class="section">
+    <h1>Games</h1>
+    <div class="gallery">
+      <div class="text-card">
+        <div>ULTRAKILL</div>
+        <div class="description">⭐ 9.5/10 "This is one of the best indie games I have ever experienced. The lore goes extremely hard, and playing such a structured game has felt really difficult to find nowadays. Thank you, New Blood."</div>
+      </div>
+      <div class="text-card">
+        <div>CS2</div>
+        <div class="description">⭐ 10/10 "The best competitive shooter anyone could wish for. I have been playing for many years and fell in love since my first game on casual where I used an AWP and people were mic spamming... LOL."</div>
+      </div>
+      <div class="text-card">
+        <div>Garry's Mod</div>
+        <div class="description">⭐ 7/10 "Garry's Mod defined shenanigans for me."</div>
+      </div>
+      <div class="text-card">
+        <div>GTA V</div>
+        <div class="description">⭐ 10/10 "The best open world experience and was extremely ahead of its time. I'd objectively crown this the best videogame of all time."</div>
+      </div>
+      <div class="text-card">
+        <div>Terraria</div>
+        <div class="description">⭐ 9/10 "This game has immense creativity and was executed perfectly. I have no words, except for the community perfecting an already perfect masterpiece by introducing mods through tModLoader."</div>
+      </div>
+      <div class="text-card">
+        <div>Minecraft</div>
+        <div class="description">⭐ 11/10 "I'm so glad that Minecraft always returns to people every once in a while. It's extremely nostalgic and satisfying to pick it up from time to time. I still remember my first experience with mobs back in 2013... I am also enjoying the direction it is headed (not so much on the bedrock side)."</div>
+      </div>
+      <div class="text-card">
+        <div>Left 4 Dead 2</div>
+        <div class="description">⭐ 8/10 "Amazing experience with friends. Old Valve games make me shed tears sometimes... Without the nostalgia factor, probably a 6."</div>
+      </div>
+      <div class="text-card">
+        <div>Dragon Ball FighterZ</div>
+        <div class="description">⭐ 9.5/10 "The greatest fighting game of all time. It revolutionised most and had an amazing community in its prime!"</div>
+      </div>
+      <div class="text-card">
+        <div>Schedule I</div>
+        <div class="description">⭐ 10/10 "This game is perfect with friends and gives that gritty low poly vibe!"</div>
+      </div>
+      <div class="text-card">
+        <div>Hollow Knight</div>
+        <div class="description">⭐ 9/10 "An amazing masterpiece that gets you puzzled... I remember how hardstuck I was on my first playthrough... LMAO!"</div>
+      </div>
+      <div class="text-card">
+        <div>Half-Life 2</div>
+        <div class="description">⭐ 11/10 "This game made me find a certain niche, that being megastructures and whatnot. I think Half-Life is immaculate world building and storytelling."</div>
+      </div>
+      <div class="text-card">
+        <div>Devil May Cry 5</div>
+        <div class="description">⭐ 11/10 "One of my favourite videogames of all time! Capcom itself is an amazing company, and to see how far the franchise has come is extremely satisfying."</div>
+      </div>
+      <div class="text-card">
+        <div>Your Only Move is HUSTLE</div>
+        <div class="description">⭐ 8.5/10 "A fighting game with turn based moves are extremely fun to watch and satisfying to see the replay at the end. I grew up with stick fights and well this game had really enjoyable moments."</div>
+      </div>
+      <div class="text-card">
+        <div>Sonic Adventure™ 2</div>
+        <div class="description">⭐ 9.5/10 "This game helped me open my eyes to the Sonic franchise. I remember playing this on my 360. It was also quite difficult (for me at least... XD)."</div>
+      </div>
+      <div class="text-card">
+        <div>Red Dead Redemption 2</div>
+        <div class="description">⭐ 11/10 "Changed my personality. I like it when games make you choose your path. RDR2 perfected this with subtle changes to hint your path. The character Arthur Morgan is also one of my favourites, I feel like RDR2 is also a jaw-dropping open-world game."</div>
+      </div>
+      <div class="text-card">
+        <div>s.p.l.i.t</div>
+        <div class="description">⭐ 11/10 "A game about hacking an unethical superstructure. It's so short yet so impactful with features that I haven't seen before. It involves no mouse input and having to only use a keyboard, with typing words as a quick time event."</div>
+      </div>
+    </div>
+  </div>
+  <div id="shows" class="section">
+    <h1>Shows</h1>
+    <div class="gallery">
+      <div class="text-card">
+        <a href="https://www.imdb.com/title/tt4158110/" target="_blank">Mr. Robot</a>
+        <div class="description">⭐ 10/10 "This is one of the best TV shows of all time, a show with immaculate cinematography and amazing twists. It isn't 'corny' and is executed perfectly for such a niche plot subject. The seasons get better as you progress and the finale is insanely good."</div>
+      </div>
+      <div class="text-card">
+        <a href="https://www.imdb.com/title/tt0903747/" target="_blank">Breaking Bad</a>
+        <div class="description">⭐ 9.8/10 "Another favourite TV show for me, I loved the character dynamic between Walter and Jesse. Walter's development furthermore was some of the best written pieces of fiction I had ever come across. The plot is also unique and kept me on the edge of my seat on some episodes. I wish I could watch it for the first time again."</div>
+      </div>
+      <div class="text-card">
+        <a href="https://www.imdb.com/title/tt3032476/" target="_blank">Better Call Saul</a>
+        <div class="description">⭐ 10/10 "Better Call Saul had a much more dramatic tone in comparison to Breaking Bad for me at least. Saul Goodman (Jimmy) was a great role and it is such a shame that Bob Odenkirk never won an emmy for his epic performance."</div>
+      </div>
+      <div class="text-card">
+        <a href="https://www.imdb.com/title/tt0500092/" target="_blank">Serial Experiments Lain</a>
+        <div class="description">⭐ 7/10 "For an old anime, this series had really sensitive topics and had amazing impact in some episodes, the overall plot is extremely trippy at times. At first I felt almost confused but it started to click together, and until that point I realised I watched a masterpiece."</div>
+      </div>
+      <div class="text-card">
+        <a href="https://www.imdb.com/title/tt0213338/" target="_blank">Cowboy Bebop</a>
+        <div class="description">⭐ 10/10 "One of my favourite animes of all time, this anime in particular was extremely ahead of it's time and Spike is one of my favourite characters in general. Cowboy Bebop has incredible world building and lore."</div>
+      </div>
+      <div class="text-card">
+        <a href="https://www.imdb.com/title/tt0112159/" target="_blank">Neon Genesis Evangelion</a>
+        <div class="description">⭐ 11/10 "This is in my top 3, not just animes, but programmes of all time. The world building and depth behind characters are so misunderstood by a majority. Shinji's character development is some of the best story-telling truly was an honour to witness. The original ending of Evangelion was also jaw-dropping, and it has one of the best original soundtracks (Shirō Sagisu) in TV!"</div>
+      </div>
+      <div class="text-card">
+        <a href="https://www.imdb.com/title/tt2356777/" target="_blank">True Detective</a>
+        <div class="description">⭐ 8/10 "True Detective was an immaculate performance. I loved Marty and Rust's character dynamic and partnership. The TV show is a little bit f*cked up, but it has really impactful quotes, especially from Rust. It also felt like I was reading a novel, through the constant timelines switches, which provided multiple perspectives on things."</div>
+      </div>
+      <div class="text-card">
+        <a href="https://www.imdb.com/title/tt0773262/" target="_blank">Dexter</a>
+        <div class="description">⭐ 9.2/10 "Dexter started blowing up on TikTok, so I thought I'd give it a try. To my surprise it had insanely good plot twists. Not one time did I feel like it was dragged out, even controversely the later seasons. Personally, I really liked the original ending too, but my favourite season was Season 6; The Doomsday Killer."</div>
+      </div>
+      <div class="text-card">
+        <a href="https://www.imdb.com/title/tt0115160/" target="_blank">Dragon Ball Z</a>
+        <div class="description">⭐ 11/10 "I hadn't really watched many anime before trying out Dragon Ball through my own curiosity. I found out I had to watch Kai to skip filler, with the sacrifice of Bruce Faulconer's amazing soundtrack for Z. DBZ really opened up my eyes of being bias against anime simply for it's reputation at the time. Dragon Ball is one of the things closest to my heart. My favourite characters consist of Gohan and Trunks. I also prefer Z to Super's anime. RIP Toriyama."</div>
+      </div>
+    </div>
+  </div>
+  <div id="manga" class="section">
+    <h1>Manga</h1>
+    <div class="gallery">
+      <div class="text-card">
+        The Climber (Kokou no Hito)
+      </div>
+    </div>
+  </div>
+  <div id="music" class="section">
+    <h1>Music</h1>
+    <div class="gallery">
+      <div class="album">
+        <img src="https://m.media-amazon.com/images/I/61ykZt82PsL.jpg" alt="Selected Ambient Works 85–92 — Aphex Twin">
+        <span>Selected Ambient Works 85–92 — Aphex Twin</span>
+      </div>
+      <div class="album">
+        <img src="https://www.dustygroove.com/images/products/c/crystalcast_crystalca_101b.jpg" alt="Crystal Castles — Crystal Castles (2008)">
+        <span>Crystal Castles — Crystal Castles (2008)</span>
+      </div>
+      <div class="album">
+        <img src="https://cdn-p.smehost.net/sites/af0adc8ea1314bfb8328afdc06ce1e06/wp-content/uploads/2020/12/Unknown-scaled.jpeg" alt="Evangelion Finally">
+        <span>Evangelion Finally</span>
+      </div>
+    </div>
+  </div>
+  <div id="socials" class="section">
+    <h1>Socials</h1>
+    <ul style="list-style:none; padding:0; line-height:2.4; font-size:1.1rem;">
+      <li><strong>Steam:</strong> <a href="https://steamcommunity.com/id/penguiXD" target="_blank" style="color:var(--red)">steamcommunity.com/id/penguiXD</a></li>
+      <li><strong>Steam Group:</strong> <a href="https://steamcommunity.com/groups/persec-" target="_blank" style="color:var(--red)">steamcommunity.com/groups/persec-</a></li>
+      <li><strong>GitHub:</strong> <a href="https://github.com/snowypenguin88" target="_blank" style="color:var(--red)">github.com/snowypenguin88</a></li>
+      <li><strong>Discord:</strong> penguiXD</li>
+    </ul>
+  </div>
+</div>
+<audio id="bg-music" src="background-music.mp3" loop preload="auto"></audio>
+<script>
+// Create persistent volume
+function createPersistentVolume() {
+  const container = document.createElement('div');
+  container.id = 'persistent-volume-container';
+  container.innerHTML = `
+    <span>Vol</span>
+    <input type="range" id="persistent-volume-slider" min="0" max="1" step="0.01" value="0.5">
+  `;
+  document.body.appendChild(container);
+  setTimeout(() => container.classList.add('visible'), 100);
+  return container.querySelector('#persistent-volume-slider');
+}
+const enterOverlay = document.getElementById('enter-overlay');
+const loader = document.getElementById('loader');
+const video = document.getElementById('boot-video');
+const skipBtn = document.getElementById('skip-btn');
+const volumeSlider = document.getElementById('volume-slider');
+const hello = document.getElementById('hello');
+const sidebar = document.getElementById('sidebar');
+const main = document.getElementById('main');
+const bgMusic = document.getElementById('bg-music');
+const bootControls = document.getElementById('boot-controls');
+bgMusic.volume = 0.5;
+let persistentSlider = null;
+
+// Enter
+enterOverlay.onclick = () => {
+  enterOverlay.style.display = 'none';
+  loader.style.display = 'flex';
+  setTimeout(() => bootControls.classList.add('visible'), 400);
+  video.play().catch(e => console.log("Video play failed:", e));
+  video.volume = volumeSlider.value || 0.5;
+};
+
+// Volume sync
+const syncVolume = (value) => {
+  video.volume = value;
+  bgMusic.volume = value;
+  if (persistentSlider) persistentSlider.value = value;
+  volumeSlider.value = value;
+};
+volumeSlider.addEventListener('input', e => syncVolume(e.target.value));
+
+// Skip
+skipBtn.onclick = () => {
+  video.currentTime = video.duration || 999;
+};
+
+// Boot end
+video.onended = () => {
+  loader.style.display = 'none';
+  hello.style.display = 'flex';
+  bgMusic.play().catch(e => {
+    console.log("Initial music play failed:", e);
+    document.body.addEventListener('click', () => bgMusic.play().catch(() => {}), {once: true});
+  });
+  setTimeout(() => {
+    hello.style.display = 'none';
+    sidebar.style.display = 'flex';
+    main.style.display = 'block';
+    main.classList.add('visible');
+    persistentSlider = createPersistentVolume();
+    persistentSlider.addEventListener('input', e => syncVolume(e.target.value));
+  }, 1800);
+};
+
+// Faster music loop
+bgMusic.onended = function() {
+  bgMusic.currentTime = 0;
+  bgMusic.volume = 0;
+  bgMusic.play();
+  setTimeout(() => {
+    bgMusic.volume = persistentSlider ? persistentSlider.value : 0.5;
+  }, 80); // very quick fade-in after instant restart
+};
+
+// Navigation
+document.querySelectorAll('nav li').forEach(li => {
+  li.onclick = () => {
+    document.querySelectorAll('nav li').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    li.classList.add('active');
+    document.getElementById(li.dataset.section).classList.add('active');
+  };
+});
+
+// Local time (UK GMT)
+function updateLocalTime() {
+  const now = new Date();
+  const options = { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hour12: false };
+  const timeString = now.toLocaleTimeString('en-GB', options);
+  document.getElementById('local-time').textContent = `Local Time: ${timeString} GMT`;
+}
+updateLocalTime();
+setInterval(updateLocalTime, 60000);
+</script>
+</body>
+</html>
