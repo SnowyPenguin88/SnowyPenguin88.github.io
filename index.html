@@ -1,4 +1,4 @@
-<!-- 3.1.0 SnowyPenguin88 | penguiXD @ 2026 -->
+<!--- SnowyPenguin88 | penguiXD (2026, 3.2.0) --->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,7 +78,7 @@ body {
   opacity: 1;
   pointer-events: auto;
 }
-#skip-btn, #volume-container {
+#skip-btn, #volume-container, .stat-box {
   background: rgba(0,0,0,0.7);
   border: 2px solid var(--red);
   color: var(--red);
@@ -93,6 +93,7 @@ body {
   align-items: center;
   gap: 8px;
 }
+.stat-box { cursor: default; min-width: 80px; justify-content: center; }
 #skip-btn:hover, #volume-container:hover { transform: scale(1.05); }
 #volume-slider { width: 100px; accent-color: var(--red); }
 #hello {
@@ -137,14 +138,14 @@ body {
   border-radius: 4px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 15px;
   transition: opacity 0.6s ease-in-out 0.8s;
 }
 #persistent-volume-container.visible {
   opacity: 1;
   pointer-events: auto;
 }
-#persistent-volume-container:hover { transform: scale(1.05); }
+#persistent-volume-container:hover { transform: scale(1.02); }
 #persistent-volume-slider { width: 100px; accent-color: var(--red); }
 #sidebar {
   width: 280px;
@@ -160,30 +161,30 @@ body {
   from { transform: translateX(-100%); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
-#pfp { 
-  width: 110px; 
-  height: 110px; 
-  border-radius: 50%; 
-  border: 3px solid var(--red); 
-  transition: box-shadow 0.6s ease-in-out; 
+#pfp {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 3px solid var(--red);
+  transition: box-shadow 0.6s ease-in-out;
   animation: shine 5s infinite alternate ease-in-out;
 }
 @keyframes shine {
   from { box-shadow: 0 0 10px rgba(225,6,0,0.5), inset 0 0 12px rgba(225,6,0,0.3); }
-  to   { box-shadow: 0 0 30px var(--red), inset 0 0 25px rgba(225,6,0,0.6); }
+  to { box-shadow: 0 0 30px var(--red), inset 0 0 25px rgba(225,6,0,0.6); }
 }
 #pfp:hover { box-shadow: 0 0 40px var(--red); }
-#username { 
-  font-size: 1.8rem; 
-  margin: 12px 0; 
-  font-weight: bold; 
-  color: var(--red); 
-  text-shadow: 0 0 15px var(--red); 
-  animation: strobe 6s infinite alternate ease-in-out; 
+#username {
+  font-size: 1.8rem;
+  margin: 12px 0;
+  font-weight: bold;
+  color: var(--red);
+  text-shadow: 0 0 15px var(--red);
+  animation: strobe 6s infinite alternate ease-in-out;
 }
 @keyframes strobe {
-  0%   { text-shadow: 0 0 12px var(--red); }
-  50%  { text-shadow: 0 0 40px var(--red); }
+  0% { text-shadow: 0 0 12px var(--red); }
+  50% { text-shadow: 0 0 40px var(--red); }
   100% { text-shadow: 0 0 12px var(--red); }
 }
 #github-credit {
@@ -353,6 +354,15 @@ h2 { color: var(--red); margin-top: 32px; }
   color: var(--red);
   line-height: 1.3;
 }
+a.social-link {
+  color: var(--red);
+  text-decoration: none;
+  transition: text-shadow 0.3s;
+}
+a.social-link:hover {
+  text-shadow: 0 0 10px var(--red);
+  text-decoration: underline;
+}
 @media (max-width: 768px) {
   #sidebar { width: 240px; }
   nav li { font-size: 1.2rem; padding: 10px 12px; }
@@ -373,10 +383,11 @@ h2 { color: var(--red); margin-top: 32px; }
     <source src="boot.mp4" type="video/mp4">
   </video>
   <div id="boot-controls">
+    <div class="stat-box"><span id="fps-boot">FPS: 0</span></div>
     <button id="skip-btn">Skip →</button>
     <div id="volume-container">
       <span>Vol</span>
-      <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+      <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1.0">
     </div>
   </div>
 </div>
@@ -419,13 +430,12 @@ h2 { color: var(--red); margin-top: 32px; }
     <h2>Website Patch Notes</h2>
     <div class="patch-notes">
       <ul>
+        <li><strong>3.2.0 Additions (23/01/2026)</strong><br>* Boosted boot sequence volume<br>* Integrated real-time FPS counter to UI<br>* Replaced social text with direct URLs<br>* Optimized background music loop timing<br>* Added more music lol</li>
         <li><strong>3.1.0 (19/01/2026)</strong><br>* Made a new repo </3<br>* Fixed a bunch of other stuff (LAG, LAG, LAG!)</li>
         <li><strong>3.0.0 (19/01/2026)</strong><br>* Added more cool things to browse!<br>* Fixed a bug<br>* Added more under information, also added dates to patchnotes.<br>* Smoother card hover + description reveal animations<br>* Faster background music loop transition</li>
         <li><strong>2.9.3 (18/01/2026)</strong><br>* Fixed the gaming bug once more :)</li>
         <li><strong>2.8.1 (18/01/2026)</strong><br>* Implemented multiple new UI features for aesthetic<br>* Fixed the boot bug again LOL<br>* Change the volume slider bug AGAIN<br>* Added a new album!<br>* Fixed descriptions under games</li>
         <li><strong>2.6.8 (18/01/2026)</strong><br>* No I will not say 6.7<br>* Fixed the boot.mp4 bug</li>
-        <li><strong>2.6.4 (18/01/2026)</strong><br>* Bug fixes<br>* Changed some UI features<br>* Added animations to games<br>* Rehauled description animations</li>
-        <li><strong>2.3.3 (18/01/2026)</strong><br>* Added this, lol</li>
       </ul>
     </div>
   </div>
@@ -434,7 +444,7 @@ h2 { color: var(--red); margin-top: 32px; }
     <div class="gallery">
       <div class="text-card">
         <div>ULTRAKILL</div>
-        <div class="description">⭐ 9.5/10 "This is one of the best indie games I have ever experienced. The lore goes extremely hard, and playing such a structured game has felt really difficult to find nowadays. Thank you, New Blood."</div>
+        <div class="description">⭐ 11/10 "This is one of the best indie games I have ever experienced. The lore goes extremely hard, and playing such a structured game has felt really difficult to find nowadays. Thank you, New Blood."</div>
       </div>
       <div class="text-card">
         <div>CS2</div>
@@ -551,11 +561,23 @@ h2 { color: var(--red); margin-top: 32px; }
     <h1>Music</h1>
     <div class="gallery">
       <div class="album">
+        <img src="https://f4.bcbits.com/img/a1638146004_16.jpg" alt="Wlfgrl — Machine Girl">
+        <span>Wlfgrl — Machine Girl (2014)</span>
+      </div>
+      <div class="album">
+        <img src="https://f4.bcbits.com/img/a1707281183_10.jpg" alt="s.p.l.i.t (OST) — Mike Klubnika">
+        <span>s.p.l.i.t (Original Soundtrack) — Mike Klubnika (2025)</span>
+      </div>
+      <div class="album">
+        <img src="https://m.media-amazon.com/images/I/71-nhMkC-vL._UF894,1000_QL80_.jpg" alt="Meteora — Linkin Park">
+        <span>Meteora — Linkin Park (2003)</span>
+      </div>
+      <div class="album">
         <img src="https://m.media-amazon.com/images/I/61ykZt82PsL.jpg" alt="Selected Ambient Works 85–92 — Aphex Twin">
         <span>Selected Ambient Works 85–92 — Aphex Twin (1992)</span>
       </div>
       <div class="album">
-        <img src="https://www.dustygroove.com/images/products/c/crystalcast_crystalca_101b.jpg" alt="Crystal Castles — Crystal Castles (2008)">
+        <img src="https://www.dustygroove.com/images/products/c/crystalcast_crystalca_101b.jpg" alt="Crystal Castles — Crystal Castles">
         <span>Crystal Castles — Crystal Castles (2008)</span>
       </div>
       <div class="album">
@@ -567,26 +589,47 @@ h2 { color: var(--red); margin-top: 32px; }
   <div id="socials" class="section">
     <h1>Socials</h1>
     <ul style="list-style:none; padding:0; line-height:2.4; font-size:1.1rem;">
-      <li><strong>Steam:</strong> steamcommunity.com/id/penguiXD</li>
-      <li><strong>Steam Group:</strong> steamcommunity.com/groups/persec-</li>
-      <li><strong>GitHub:</strong> <a href="https://github.com/snowypenguin88" target="_blank" style="color:var(--red)">github.com/snowypenguin88</a></li>
-      <li><strong>Discord:</strong> penguiXD</li>
+      <li><strong>Steam:</strong> <a href="https://steamcommunity.com/id/penguiXD" target="_blank" class="social-link">steamcommunity.com/id/penguiXD</a></li>
+      <li><strong>Steam Group:</strong> <a href="https://steamcommunity.com/groups/persec-" target="_blank" class="social-link">steamcommunity.com/groups/persec-</a></li>
+      <li><strong>GitHub:</strong> <a href="https://github.com/snowypenguin88" target="_blank" class="social-link">github.com/snowypenguin88</a></li>
     </ul>
   </div>
 </div>
 <audio id="bg-music" src="background-music.mp3" loop preload="auto"></audio>
 <script>
+
+let lastTime = performance.now();
+let frameCount = 0;
+let fps = 0;
+function updateFPS() {
+  const now = performance.now();
+  frameCount++;
+  if (now - lastTime >= 1000) {
+    fps = frameCount;
+    frameCount = 0;
+    lastTime = now;
+    const fpsBoot = document.getElementById('fps-boot');
+    const fpsMain = document.getElementById('fps-main');
+    if (fpsBoot) fpsBoot.textContent = `FPS: ${fps}`;
+    if (fpsMain) fpsMain.textContent = `FPS: ${fps}`;
+  }
+  requestAnimationFrame(updateFPS);
+}
+updateFPS();
+
 function createPersistentVolume() {
   const container = document.createElement('div');
   container.id = 'persistent-volume-container';
   container.innerHTML = `
+    <div class="stat-box" style="padding: 5px 10px; border-width: 1px;"><span id="fps-main">FPS: 0</span></div>
     <span>Vol</span>
-    <input type="range" id="persistent-volume-slider" min="0" max="1" step="0.01" value="0.5">
+    <input type="range" id="persistent-volume-slider" min="0" max="1" step="0.01" value="1.0">
   `;
   document.body.appendChild(container);
   setTimeout(() => container.classList.add('visible'), 100);
   return container.querySelector('#persistent-volume-slider');
 }
+
 const enterOverlay = document.getElementById('enter-overlay');
 const loader = document.getElementById('loader');
 const video = document.getElementById('boot-video');
@@ -597,30 +640,32 @@ const sidebar = document.getElementById('sidebar');
 const main = document.getElementById('main');
 const bgMusic = document.getElementById('bg-music');
 const bootControls = document.getElementById('boot-controls');
-bgMusic.volume = 0.5;
+
+bgMusic.volume = 1.0;
 let persistentSlider = null;
+
 enterOverlay.onclick = () => {
   enterOverlay.style.display = 'none';
   loader.style.display = 'flex';
   setTimeout(() => bootControls.classList.add('visible'), 400);
+  video.volume = 1.0; 
   video.play().catch(e => console.log("Video play failed:", e));
-  video.volume = volumeSlider.value || 0.5;
 };
+
 const syncVolume = (value) => {
   video.volume = value;
   bgMusic.volume = value;
   if (persistentSlider) persistentSlider.value = value;
   volumeSlider.value = value;
 };
+
 volumeSlider.addEventListener('input', e => syncVolume(e.target.value));
-skipBtn.onclick = () => {
-  video.currentTime = video.duration || 999;
-};
+skipBtn.onclick = () => { video.currentTime = video.duration || 999; };
+
 video.onended = () => {
   loader.style.display = 'none';
   hello.style.display = 'flex';
   bgMusic.play().catch(e => {
-    console.log("Initial music play failed:", e);
     document.body.addEventListener('click', () => bgMusic.play().catch(() => {}), {once: true});
   });
   setTimeout(() => {
@@ -632,14 +677,12 @@ video.onended = () => {
     persistentSlider.addEventListener('input', e => syncVolume(e.target.value));
   }, 1800);
 };
-bgMusic.onended = function() {
-  bgMusic.currentTime = 0;
-  bgMusic.volume = 0;
-  bgMusic.play();
-  setTimeout(() => {
-    bgMusic.volume = persistentSlider ? persistentSlider.value : 0.5;
-  }, 80);
-};
+
+bgMusic.addEventListener('ended', function() {
+  this.currentTime = 0;
+  this.play();
+}, false);
+
 document.querySelectorAll('nav li').forEach(li => {
   li.onclick = () => {
     document.querySelectorAll('nav li').forEach(n => n.classList.remove('active'));
@@ -648,15 +691,10 @@ document.querySelectorAll('nav li').forEach(li => {
     document.getElementById(li.dataset.section).classList.add('active');
   };
 });
+
 function updateLocalTime() {
   const now = new Date();
-  const options = {
-    timeZone: 'Europe/London',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false
-  };
+  const options = { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
   const timeString = now.toLocaleTimeString('en-GB', options);
   document.getElementById('local-time').textContent = `Local Time: ${timeString} GMT`;
 }
