@@ -1,4 +1,3 @@
-<!--- SnowyPenguin88 | penguiXD (2026, 3.2.0) --->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -291,6 +290,17 @@ h2 { color: var(--red); margin-top: 32px; }
   gap: 24px;
   align-items: stretch;
 }
+/* Force music into 3 columns on larger screens */
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+@media (min-width: 1200px) {
+  .music-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 .text-card {
   background: #111;
   border: 2px solid var(--red);
@@ -335,8 +345,9 @@ h2 { color: var(--red); margin-top: 32px; }
 }
 .album:hover { transform: scale(1.05); }
 .album img {
-  width: 320px;
-  height: 320px;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border: 2px solid var(--red);
   border-radius: 8px;
@@ -368,8 +379,6 @@ a.social-link:hover {
   nav li { font-size: 1.2rem; padding: 10px 12px; }
   #main { padding: 20px; }
   .description { font-size: 0.8rem; }
-  .album img { width: 280px; height: 280px; }
-  .album span { font-size: 0.95rem; }
 }
 </style>
 </head>
@@ -407,7 +416,7 @@ a.social-link:hover {
       <li data-section="home" class="active">HOME</li>
       <li data-section="games">GAMES</li>
       <li data-section="shows">SHOWS</li>
-      <li data-section="manga">MANGA</li>
+      <li data-section="manga">BOOKS</li>
       <li data-section="music">MUSIC</li>
       <li data-section="socials">SOCIALS</li>
     </ul>
@@ -430,7 +439,7 @@ a.social-link:hover {
     <h2>Website Patch Notes</h2>
     <div class="patch-notes">
       <ul>
-        <li><strong>3.2.0 Additions (23/01/2026)</strong><br>* Boosted boot sequence volume<br>* Integrated real-time FPS counter to UI<br>* Replaced social text with direct URLs<br>* Optimized background music loop timing<br>* Added more music lol</li>
+        <li><strong>3.2.0 Additions (23/01/2026)</strong><br>* boosted boot sequence volume<br>* integrated real-time FPS counter to UI<br>* replaced social text with direct URLs<br>* optimized background music loop timing<br>* added more music lol</li>
         <li><strong>3.1.0 (19/01/2026)</strong><br>* Made a new repo </3<br>* Fixed a bunch of other stuff (LAG, LAG, LAG!)</li>
         <li><strong>3.0.0 (19/01/2026)</strong><br>* Added more cool things to browse!<br>* Fixed a bug<br>* Added more under information, also added dates to patchnotes.<br>* Smoother card hover + description reveal animations<br>* Faster background music loop transition</li>
         <li><strong>2.9.3 (18/01/2026)</strong><br>* Fixed the gaming bug once more :)</li>
@@ -550,23 +559,23 @@ a.social-link:hover {
     </div>
   </div>
   <div id="manga" class="section">
-    <h1>Manga</h1>
+    <h1>Books / Manga / Comics</h1>
     <div class="gallery">
       <div class="text-card">
-        The Climber (Kokou no Hito)
+        Coming soon!
       </div>
     </div>
   </div>
   <div id="music" class="section">
     <h1>Music</h1>
-    <div class="gallery">
+    <div class="music-grid">
       <div class="album">
         <img src="https://f4.bcbits.com/img/a1638146004_16.jpg" alt="Wlfgrl — Machine Girl">
         <span>Wlfgrl — Machine Girl (2014)</span>
       </div>
       <div class="album">
         <img src="https://f4.bcbits.com/img/a1707281183_10.jpg" alt="s.p.l.i.t (OST) — Mike Klubnika">
-        <span>s.p.l.i.t (Original Soundtrack) — Mike Klubnika (2025)</span>
+        <span>s.p.l.i.t (OST) — Mike Klubnika (2025)</span>
       </div>
       <div class="album">
         <img src="https://m.media-amazon.com/images/I/71-nhMkC-vL._UF894,1000_QL80_.jpg" alt="Meteora — Linkin Park">
@@ -597,7 +606,6 @@ a.social-link:hover {
 </div>
 <audio id="bg-music" src="background-music.mp3" loop preload="auto"></audio>
 <script>
-
 let lastTime = performance.now();
 let frameCount = 0;
 let fps = 0;
